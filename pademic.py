@@ -349,4 +349,6 @@ class Pandemic (object):
 
 
 if __name__ == "__main__":
-  
+ 	v = Virus (chance=0.9, distance=4, latency=7, illness=30, immunity=float("inf"))
+	p = Pandemic (population=1000, init_ill=30, virus=v, quarantine=False, area=Size(x=800, y=600))
+	p.run (until=2000)
