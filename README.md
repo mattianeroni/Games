@@ -1,6 +1,10 @@
 # games
 A collection of games
 
+
+### hangman
+The hangman game with a small set of words and sentences.
+
 ### snake
 The classic snake game.
 
@@ -11,7 +15,3 @@ The classic snake game.
 The simulation of an immaginary pandemic. 
 
 ![alt text](https://github.com/mattianeroni/games/blob/main/example.png)
-
-
-### hangman
-The hangman game with a small set of words.
