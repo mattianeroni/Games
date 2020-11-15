@@ -1,13 +1,8 @@
 import random
 
 
-word = random.choice (["soqquadro", "casa di cura", "hotel", "disinfestatore",
-			"cimice", "specializzando di chimica", "mattia",
-			"grassa", "gatta pelosa", "punghino",
-			"bambino ritardato", "bambino super intelligente",
-			"ratto di fogna", "elefante elegante","caravelle",
-			"cristoforo colombo", "corona virus",
-			"molly"])
+word = random.choice (["bad boy", "swarm of bees", "birds flock", "elephant", "the day after tomorrow", "the end of the world", "pandemic",
+		      "donald trump sucks", "obama rocks", "madonna", "elvis presley"])
 
 get_letter = lambda i: i if i==" " else "_"
 
@@ -16,13 +11,13 @@ printed_word = "".join(get_letter(i) for i in word)
 
 while True:
 	print("---------------------------")
-	print(f"Hai ancora {lifes} vite")
-	print("La parola da indovinare:")
+	print(f"You still have {lifes} lifes")
+	print("The word to guess:")
 	print(printed_word)
-	x = input("Indovina la prossima lettera: ")
+	x = input("Guess the next letter: ")
 	
 	if x in word:
-		print("Giusto!")
+		print("Good job!")
 		n = []
 		for j, i in zip(printed_word, word):
 			if i == x:
@@ -31,15 +26,15 @@ while True:
 				n.append (j)
 		printed_word = "".join(n)
 	else:
-		print("Errore!")
+		print("Error!")
 		lifes -= 1
 	
 	if lifes <= 0:
-		print("Hai perso...")
+		print("Sorry, you lost...")
 		break
 
 	if "_" not in printed_word:
-		print("Hai vinto!!! Congratulazioni!")
+		print("You won!!! Congratulations!")
 		break
 
 
