@@ -12,8 +12,8 @@ printed_word = "".join(get_letter(i) for i in word)
 while True:
 	print("---------------------------")
 	print(f"You still have {lifes} lifes")
-	print("The word to guess:")
-	print(printed_word)
+	print("The word to guess is: ", printed_word)
+	
 	x = input("Guess the next letter: ")
 	
 	if x in word:
