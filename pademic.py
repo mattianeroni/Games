@@ -1,11 +1,7 @@
-from __future__ import annotations
 """
 This is the simulation of a pandemic with a 2D visualization to help the comprehension.
 Developed by Mattia Neroni the 13th October 2020.
 """
-
-
-from typing import List, Tuple, Dict, Union
 
 import pygame # type: ignore
 import pygame.freetype # type: ignore
@@ -89,9 +85,12 @@ class Person (pygame.sprite.Sprite):
     """
     Class to represent a person.
     """
-    def __init__ (self, position : Position) -> None:
+    def __init__ (self, position):
         """
         Initialize
+	
+	:param position: Her/his strating position.
+	
         """
         super().__init__()
 
@@ -106,14 +105,14 @@ class Person (pygame.sprite.Sprite):
 
         self.position = position
         self.state = STATE.healty
-        self.history : List[Dict[str, int]] = []
+        self.history = []
 
 
 
 
 
 
-    def set_pos (self, position : Position) -> None:
+    def set_pos (self, position):
         """
         This method sets a new position for the person involved.
         """
@@ -126,12 +125,12 @@ class Person (pygame.sprite.Sprite):
 
 
 
-    def immune (self, time : int) -> bool:
+    def immune (self, time):
     	"""
 		This method checks in a given instant of the simulation if the person
 		is immune or not.
-		:param time: The current simulation time.
-		:return: True if the person is immune, False otherwise.
+		:param time: <int> The current simulation time.
+		:return: <bool> True if the person is immune, False otherwise.
     	"""
     	if len (self.history) > 0 and self.history[-1].get("get_healty"):
     		if self.history[-1].get("immunity") > time - self.history[-1].get("get_healty"):
@@ -143,10 +142,15 @@ class Person (pygame.sprite.Sprite):
 
 
 
-    def set_state (self, time : int, state : str, virus : Virus) -> None:
+    def set_state (self, time, state, virus):
         """
         This method change the state of a person and register when the change
         toke place.
+	
+	:param time: <int> The current simulation time.
+	:param state: <str> The new state of th person.
+	:param virus: <Virus> The virus that infected the person.
+	
         """
         self.state = state
 
@@ -169,13 +173,14 @@ class Person (pygame.sprite.Sprite):
 
 
 
-    def upgrade_state (self, time : int) -> str:
+    def upgrade_state (self, time):
     	"""
 		This method upgrade the state of the person depending on the time
 		passed after the last change of state.
 		Finally, it returns the new state of the person.
-		:param time: The current simulation time.
-		:return: The new state of the person.
+		
+		:param time: <int> The current simulation time.
+		:return: <str> The new state of the person.
     	"""
     	if len(self.history) > 0:
     		if self.state == STATE.latent and time - self.history[-1]["get_latent"] >= self.history[-1]["latency"]:
@@ -202,21 +207,21 @@ class Pandemic (object):
     This is the main class representing the simulation of the pandemic.
     """
 
-    def __init__ (self, population : int, init_ill : int, virus : Virus, quarantine : bool, area : Size) -> None:
+    def __init__ (self, population, init_ill, virus, quarantine, area):
         """
         Initialize.
-        :attr population: The total number of people
-        :attr inti_ill: The starting number of ill people
-        :attr virus: The characteristics of the virus
-        :attr quarantine: If true the healing people are isolated and not contagious,
+        :attr population: <int> The total number of people
+        :attr inti_ill: <int> The starting number of ill people
+        :attr virus: <Virus> The characteristics of the virus
+        :attr quarantine: <bool> If true the healing people are isolated and not contagious,
                             otherwise they go on infecting other people.
-        :attr area: The size of the area where the people move
+        :attr area: <Size> The size of the area where the people move
         """
         self.quarantine = quarantine
         self.area_size = area
         self.virus = virus
 
-        self.population : Dict[str, List[Person]] = {
+        self.population = {
             "healty" : [Person (Position (x=random.randint(0, area.x), y=random.randint(0, area.y))) for _ in range(population)],
             "latent" : [],
             "ill" : []
@@ -233,12 +238,13 @@ class Pandemic (object):
 
 
     @staticmethod
-    def euclidean (pos1 : Position, pos2 : Position) -> int:
+    def euclidean (pos1, pos2):
     	"""
 		This method returns the euclidean distance between two positions.
-		:param pos1: First position.
-		:param pos2: Second position.
-		:return: The euclidean distance.
+		
+		:param pos1: <Position> First position.
+		:param pos2: <Position> Second position.
+		:return: <int> The euclidean distance.
     	"""
     	return int(((pos1.x - pos2.x)**2 + (pos1.y - pos2.y)**2)**0.5)
 
@@ -246,15 +252,17 @@ class Pandemic (object):
 
 
 
-    def contact (self, time : int,  contagious : Person, healty : Person) -> bool:
+    def contact (self, time,  contagious, healty):
         """
         This method represents a contact between a contagius and a healty person.
         It return True is the healty person is infected, and False otherwise.
         The infection depends on the chance of infection related to the virus.
-		:param time: The instant when the contact take place.
-        :param contagious: The contagius person.
-        :param healty: The healty person.
-        :return: True if there is an infection, False otherwise.
+	
+	:param time: <int> The instant when the contact take place.
+        :param contagious: <Person> The contagius person.
+        :param healty: <Person> The healty person.
+        :return: <bool> True if there is an infection, False otherwise.
+	
         """
         rnd = random.random()
 
@@ -273,7 +281,7 @@ class Pandemic (object):
 
 
 
-    def run (self, until : int) -> None:
+    def run (self, until):
     	"""
 		This is the main method that runs the simulation.
     	"""
