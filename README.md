@@ -1,4 +1,4 @@
-# games
+# Games
 A collection of games
 
 
